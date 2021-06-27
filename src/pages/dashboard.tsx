@@ -7,7 +7,7 @@ import { withSSRAuth } from '../utils/withSSRAuth';
 import { Can } from './../components/Can';
 
 export default function Dashboard() {
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
 
   useEffect(() => {
     api.get('me').then((response) => {
@@ -15,11 +15,14 @@ export default function Dashboard() {
     }).catch(error => {
       console.log(error);
     });
-  }, [])
+  }, []);
 
   return (
     <>
       <h1>Dashboard: {user?.email}</h1>
+
+      <button onClick={signOut}>Sair</button>
+
       <Can permissions={['metrics.list']}>
         <div>Métricas</div>
       </Can>
